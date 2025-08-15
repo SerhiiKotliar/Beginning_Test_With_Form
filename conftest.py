@@ -1,213 +1,105 @@
-import sys
-import os
 import tkinter as tk
 from tkinter import messagebox
-import string
 import re
-from urllib.parse import urlparse
+import sys
 
-
-# --- проверки целых значений (для validatecommand с %P) ---
-def allow_login_value(new_value: str) -> bool:
-    # допускаем пустое (что бы можно было стирать)
-    return bool(re.fullmatch(r"[A-Za-z0-9]*", new_value or ""))
-
-def allow_password_value(new_value: str) -> bool:
-    # только печатаемые ASCII, без пробела
-    return all(32 <= ord(c) <= 126 and c != " " for c in (new_value or ""))
-
-
-# --- проверки при нажатии OK ---
-def validate_password_rules(pw: str):
-    if not pw:
-        return "Пароль не може бути порожнім."
-    if not any(c.islower() for c in pw):
-        return "Пароль має містити принаймні одну маленьку літеру."
-    if not any(c.isupper() for c in pw):
-        return "Пароль має містити принаймні одну велику літеру."
-    if not any(c.isdigit() for c in pw):
-        return "Пароль має містити принаймні одну цифру."
-    if not any(c in string.punctuation for c in pw):
-        return "Пароль має містити принаймні один спеціальний символ."
-    return None
-
-def validate_url_value(url: str):
-    try:
-        u = urlparse(url)
-        if u.scheme and u.netloc:
-            return None
-        return "Неправильний формат URL. Приклад: https://example.com"
-    except Exception:
-        return "Неправильний формат URL."
+# Конфиг: имя_поля -> (метка, тип_поля, функция_валидации)
+FIELDS_CONFIG = [
+    ("login", "Логин", "entry", lambda v: re.fullmatch(r"[A-Za-z0-9]+", v) is not None),
+    ("password", "Пароль", "password", lambda v: (
+        any(c.islower() for c in v) and
+        any(c.isupper() for c in v) and
+        any(c.isdigit() for c in v) and
+        any(c in r"!@#$%^&*()-_=+[]{};:'\",.<>?/\\|`~" for c in v) and
+        all(c.isprintable() for c in v)
+    )),
+    ("url", "URL", "entry", lambda v: re.fullmatch(r"https?://[^\s/$.?#].[^\s]*", v) is not None),
+]
 
 
 class InputDialog(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Введення тестових даних")
-        self.attributes("-topmost", True)
+        self.attributes('-topmost', True)
 
-        self.required_vars = {}
-        self.labels = {}
         self.entries = {}
-        self.password_visible = False
+        self.result = None
 
-        # (лейбл, имя_атрибута, дефолт, функция_допустимого_ввода)
-        fields = (
-            ("Логін:", "login", "", allow_login_value),
-            ("Пароль:", "password", "", allow_password_value),
-            ("Адреса (URL):", "url", "https://en.wikipedia.org/wiki/Main_Page", None),
-        )
+        # Цикл по конфигу
+        for i, (field_name, label_text, field_type, _) in enumerate(FIELDS_CONFIG):
+            tk.Label(self, text=label_text).grid(row=i, column=0, sticky="w", padx=5, pady=5)
 
-        for row, (label_text, attr_name, default, allow_func) in enumerate(fields):
-            tk.Label(self, text=label_text).grid(row=row, column=0, padx=5, pady=5, sticky="w")
-            self.labels[attr_name] = label_text
+            entry = tk.Entry(self, show="*" if field_type == "password" else "")
+            entry.grid(row=i, column=1, padx=5, pady=5)
 
-            show_char = "*" if attr_name == "password" else ""
-            entry = tk.Entry(self, show=show_char)
-            entry.insert(0, default)
-            entry.config(highlightthickness=1, highlightbackground="gray", highlightcolor="gray")
+            # URL подсветка "на лету"
+            if field_name == "url":
+                entry.bind("<KeyRelease>", self.validate_url_live)
 
-            # валидация на лету, учитывает вставку (используем %P = proposed value)
-            if allow_func is not None:
-                vcmd = self._vcmd_factory(entry, allow_func)
-                entry.config(validate="key", validatecommand=vcmd)
+            self.entries[field_name] = entry
 
-            entry.grid(row=row, column=1, padx=5, pady=5, sticky="we")
-            setattr(self, attr_name, entry)
-            self.entries[attr_name] = entry
+        # Кнопки
+        btn_frame = tk.Frame(self)
+        btn_frame.grid(row=len(FIELDS_CONFIG), column=0, columnspan=2, pady=10)
 
-            # чекбокс "Обов'язкове" для каждого поля
-            var = tk.BooleanVar(value=True if attr_name in ("login", "password", "url") else False)
-            chk = tk.Checkbutton(self, text="Обов'язкове", variable=var)
-            chk.grid(row=row, column=2, padx=5, pady=5, sticky="w")
-            self.required_vars[attr_name] = var
+        tk.Button(btn_frame, text="OK", command=self.on_ok).pack(side="left", padx=5)
+        tk.Button(btn_frame, text="Cancel", command=self.on_cancel).pack(side="left", padx=5)
 
-            # кнопка показать/скрыть рядом только с паролем
-            if attr_name == "password":
-                btn = tk.Button(self, text="Показати", command=self.toggle_password)
-                btn.grid(row=row, column=3, padx=5, pady=5, sticky="w")
-                self.show_btn = btn  # сохраним ссылку
+        # Кнопка "Показать пароль"
+        for name, label, field_type, _ in FIELDS_CONFIG:
+            if field_type == "password":
+                tk.Checkbutton(btn_frame, text="Показать пароль",
+                               command=lambda e=self.entries[name]: self.toggle_password(e)).pack(side="left", padx=5)
 
-        # кнопки управления
-        self.submit_button = tk.Button(self, text="OK", command=self.on_ok)
-        self.submit_button.grid(row=len(fields), column=0, columnspan=1, pady=10, sticky="we", padx=5)
-
-        self.cancel_button = tk.Button(self, text="Cancel", command=self.on_cancel)
-        self.cancel_button.grid(row=len(fields), column=1, columnspan=1, pady=10, sticky="we", padx=5)
+        # Фокус на первом поле
+        first_field = list(self.entries.values())[0]
+        first_field.focus_set()
 
         self.bind("<Return>", lambda e: self.on_ok())
-        self.result = None
-        self.columnconfigure(1, weight=1)  # растягиваем колонку с вводом
 
-        # динамический размер и центрирование
-        self.update_idletasks()
-        req_width = 600
-        req_height = self.winfo_reqheight() + 20
-        self.center_window(req_width, req_height)
-
-        # курсор/фокус в конец поля пароля
-        self.password.icursor(tk.END)
-        self.password.focus_set()
-
-    # ------ helpers ------
-    def _vcmd_factory(self, entry, allow_func):
-        def _vcmd(new_value):
-            ok = allow_func(new_value)
-            if ok:
-                self._set_ok(entry)
-            else:
-                self._set_err(entry)
-            return ok
-        return (self.register(_vcmd), "%P")
-
-    def _set_err(self, entry):
-        entry.config(highlightthickness=2, highlightbackground="red", highlightcolor="red")
-
-    def _set_ok(self, entry):
-        entry.config(highlightthickness=1, highlightbackground="gray", highlightcolor="gray")
-
-    def center_window(self, width, height):
-        sw, sh = self.winfo_screenwidth(), self.winfo_screenheight()
-        x = (sw - width) // 2
-        y = (sh - height) // 2
-        self.geometry(f"{width}x{height}+{x}+{y}")
-
-    # ------ UI actions ------
-    def toggle_password(self):
-        if self.password_visible:
-            self.password.config(show="*")
-            self.show_btn.config(text="Показати")
-            self.password_visible = False
+    def toggle_password(self, entry):
+        if entry.cget("show") == "*":
+            entry.config(show="")
         else:
-            self.password.config(show="")
-            self.show_btn.config(text="Сховати")
-            self.password_visible = True
+            entry.config(show="*")
+
+    def validate_url_live(self, event):
+        url = event.widget.get()
+        pattern = r"https?://[^\s/$.?#].[^\s]*"
+        if re.fullmatch(pattern, url):
+            event.widget.config(bg="lightgreen")
+        else:
+            event.widget.config(bg="lightcoral")
 
     def on_ok(self):
-        # проверяем заполнение обязательных
-        missing = []
-        for name, var in self.required_vars.items():
-            if var.get() and not getattr(self, name).get().strip():
-                missing.append(self.labels[name])
-                self._set_err(self.entries[name])
-            else:
-                self._set_ok(self.entries[name])
-        if missing:
-            messagebox.showerror(
-                "Помилка",
-                "Будь ласка, заповніть обов'язкові поля зі списку:\n" + "\n".join(missing),
-                parent=self
-            )
-            return
-
-        # предметные проверки
-        login_val = self.login.get()
-        if not allow_login_value(login_val):
-            self._set_err(self.login)
-            messagebox.showerror("Помилка", "Логін може містити лише англійські літери та цифри.", parent=self)
-            self.login.focus_set()
-            return
-
-        pw = self.password.get()
-        if not allow_password_value(pw) or (err := validate_password_rules(pw)):
-            self._set_err(self.password)
-            messagebox.showerror("Помилка", err or "Пароль містить недопустимі символи.", parent=self)
-            self.password.focus_set()
-            return
-        self._set_ok(self.password)
-
-        url_val = self.url.get()
-        if (err := validate_url_value(url_val)):
-            self._set_err(self.url)
-            messagebox.showerror("Помилка", err, parent=self)
-            self.url.focus_set()
-            return
-        self._set_ok(self.url)
-
-        # всё ок
-        self.result = {"login": login_val, "password": pw, "url": url_val}
+        data = {}
+        for field_name, label_text, _, validator in FIELDS_CONFIG:
+            value = self.entries[field_name].get().strip()
+            if not validator(value):
+                messagebox.showerror("Ошибка", f"Поле '{label_text}' заполнено неверно!", parent=self)
+                return
+            data[field_name] = value
+        self.result = data
         self.destroy()
 
     def on_cancel(self):
         self.result = None
-        try:
-            self.destroy()
-            self.update_idletasks()
-        finally:
-            # полный выход (в т.ч. под pytest)
-            os._exit(0)
+        self.destroy()
+        sys.exit()
 
 
-# вызов диалога
 def get_user_input():
     root = tk.Tk()
     root.withdraw()
-    dlg = InputDialog(root)
-    dlg.grab_set()
-    root.wait_window(dlg)
-    return dlg.result
+    dialog = InputDialog(root)
+    root.wait_window(dialog)
+    return dialog.result
 
+#
+# if __name__ == "__main__":
+#     result = get_user_input()
+#     print(result)
 
 
 # Виклик форми
