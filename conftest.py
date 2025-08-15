@@ -9,20 +9,30 @@ from urllib.parse import urlparse
 
 # --- проверки целых значений (для validatecommand с %P) ---
 def allow_login_value(new_value: str) -> bool:
-    # допускаем пустое (что бы можно было стирать)
-    return bool(re.fullmatch(r"[A-Za-z0-9]*", new_value or ""))
+    # допускаем пустое (чтобы можно было стирать)
+    return bool(re.fullmatch(r"[A-Za-z0-9]{0,16}", new_value or ""))
 
 def allow_password_value(new_value: str) -> bool:
-    # только печатаемые ASCII, без пробела
-    return all(32 <= ord(c) <= 126 and c != " " for c in (new_value or ""))
+    # только печатаемые ASCII, без пробела, длина до 20
+    return len(new_value) <= 20 and all(32 <= ord(c) <= 126 and c != " " for c in (new_value or ""))
+
 def allow_url_value(new_value: str) -> bool:
     # простая проверка: начинается с http/https и есть хотя бы один "."
     return bool(re.fullmatch(r"https?://[^\s/$.?#].[^\s]*", new_value or ""))
 
 # --- проверки при нажатии OK ---
+def validate_login_rules(log: str):
+    if not log:
+        return "Логін не може бути порожнім."
+    if len(log) < 4 or len(log) > 16:
+        return "Логін має бути від 4 до 16 символів включно"
+    return None
+
 def validate_password_rules(pw: str):
     if not pw:
         return "Пароль не може бути порожнім."
+    if len(pw) < 8 or len(pw) > 20:
+        return "Пароль має бути від 8 до 20 символів включно"
     if not any(c.islower() for c in pw):
         return "Пароль має містити принаймні одну маленьку літеру."
     if not any(c.isupper() for c in pw):
@@ -33,21 +43,46 @@ def validate_password_rules(pw: str):
         return "Пароль має містити принаймні один спеціальний символ."
     return None
 
+
+import re
+from urllib.parse import urlparse
+
+
 def validate_url_value(url: str):
+    if not url:
+        return "URL не може бути порожнім."
+
+    # RFC 3986 разрешенные символы в URL
+    # scheme://[user:pass@]host[:port]/path?query#fragment
+    allowed_pattern = re.compile(
+        r'^[A-Za-z][A-Za-z0-9+.-]*://'  # схема
+        r'([A-Za-z0-9\-._~%!$&\'()*+,;=]+@)?'  # userinfo
+        r'([A-Za-z0-9\-._~%]+|\[[0-9a-fA-F:.]+\])'  # host или IPv6
+        r'(:[0-9]+)?'  # порт
+        r'(/[A-Za-z0-9\-._~%!$&\'()*+,;=:@]*)*'  # путь
+        r'(\?[A-Za-z0-9\-._~%!$&\'()*+,;=:@/?]*)?'  # query
+        r'(#[A-Za-z0-9\-._~%!$&\'()*+,;=:@/?]*)?$'  # fragment
+    )
+
+    if not allowed_pattern.fullmatch(url):
+        return "URL містить недопустимі символи або неправильний формат."
+
+    # Дополнительно проверка схемы и netloc через urlparse
     try:
         u = urlparse(url)
-        if u.scheme and u.netloc:
-            return None
-        return "Неправильний формат URL. Приклад: https://example.com"
+        if u.scheme not in ("http", "https") or not u.netloc:
+            return "URL повинен починатися з http:// або https:// і містити домен."
     except Exception:
         return "Неправильний формат URL."
+
+    return None  # URL корректен
+
 # --- Конфиг полей ---
 FIELDS_CONFIG = [
     {"label": "Логін:", "name": "login", "default": "", "allow_func": allow_login_value},
     {"label": "Пароль:", "name": "password", "default": "", "allow_func": allow_password_value},
     {"label": "Адреса (URL):", "name": "url", "default": "https://en.wikipedia.org/wiki/Main_Page", "allow_func": allow_url_value},
 ]
-
 
 class InputDialog(tk.Toplevel):
     def __init__(self, parent):
@@ -60,42 +95,6 @@ class InputDialog(tk.Toplevel):
         self.entries = {}
         self.password_visible = False
 
-        # (лейбл, имя_атрибута, дефолт, функция_допустимого_ввода)
-        # fields = (
-        #     ("Логін:", "login", "", allow_login_value),
-        #     ("Пароль:", "password", "", allow_password_value),
-        #     ("Адреса (URL):", "url", "https://en.wikipedia.org/wiki/Main_Page", None),
-        # )
-
-        # for row, (label_text, attr_name, default, allow_func) in enumerate(FIELDS_CONFIG):
-        #     tk.Label(self, text=label_text).grid(row=row, column=0, padx=5, pady=5, sticky="w")
-        #     self.labels[attr_name] = label_text
-        #
-        #     show_char = "*" if attr_name == "password" else ""
-        #     entry = tk.Entry(self, show=show_char)
-        #     entry.insert(0, default)
-        #     entry.config(highlightthickness=1, highlightbackground="gray", highlightcolor="gray")
-        #
-        #     # валидация на лету, учитывает вставку (используем %P = proposed value)
-        #     if allow_func is not None:
-        #         vcmd = self._vcmd_factory(entry, allow_func)
-        #         entry.config(validate="key", validatecommand=vcmd)
-        #
-        #     entry.grid(row=row, column=1, padx=5, pady=5, sticky="we")
-        #     setattr(self, attr_name, entry)
-        #     self.entries[attr_name] = entry
-        #
-        #     # чекбокс "Обов'язкове" для каждого поля
-        #     var = tk.BooleanVar(value=True if attr_name in ("login", "password", "url") else False)
-        #     chk = tk.Checkbutton(self, text="Обов'язкове", variable=var)
-        #     chk.grid(row=row, column=2, padx=5, pady=5, sticky="w")
-        #     self.required_vars[attr_name] = var
-        #
-        #     # кнопка показать/скрыть рядом только с паролем
-        #     if attr_name == "password":
-        #         btn = tk.Button(self, text="Показати", command=self.toggle_password)
-        #         btn.grid(row=row, column=3, padx=5, pady=5, sticky="w")
-        #         self.show_btn = btn  # сохраним ссылку
         for row, field in enumerate(FIELDS_CONFIG):
             label_text = field["label"]
             attr_name = field["name"]
@@ -130,12 +129,6 @@ class InputDialog(tk.Toplevel):
 
 
         # кнопки управления
-        # self.submit_button = tk.Button(self, text="OK", command=self.on_ok)
-        #         # self.submit_button.grid(row=len(fields), column=0, columnspan=1, pady=10, sticky="we", padx=5)
-        #         #
-        #         # self.cancel_button = tk.Button(self, text="Cancel", command=self.on_cancel)
-        #         # self.cancel_button.grid(row=len(fields), column=1, columnspan=1, pady=10, sticky="we", padx=5)
-
         self.submit_button = tk.Button(self, text="OK", command=self.on_ok)
         self.submit_button.grid(row=len(FIELDS_CONFIG), column=0, columnspan=1, pady=10, sticky="we", padx=5)
 
@@ -152,9 +145,6 @@ class InputDialog(tk.Toplevel):
         req_height = self.winfo_reqheight() + 20
         self.center_window(req_width, req_height)
 
-        # # курсор/фокус в конец поля пароля
-        # self.password.icursor(tk.END)
-        # self.password.focus_set()
         # фокус на первом поле (логин)
         first_field_name = FIELDS_CONFIG[0]["name"]
         self.entries[first_field_name].icursor(tk.END)
@@ -214,24 +204,27 @@ class InputDialog(tk.Toplevel):
 
         # предметные проверки
         login_val = self.login.get()
-        if not allow_login_value(login_val):
+        errlog = validate_login_rules(login_val)
+        if not allow_login_value(login_val) or errlog:
             self._set_err(self.login)
-            messagebox.showerror("Помилка", "Логін може містити лише англійські літери та цифри.", parent=self)
+            messagebox.showerror("Помилка", errlog or "Логін може містити лише англійські літери та цифри.", parent=self)
             self.login.focus_set()
             return
 
         pw = self.password.get()
-        if not allow_password_value(pw) or (err := validate_password_rules(pw)):
+        errp = validate_password_rules(pw)
+        if not allow_password_value(pw) or errp:
             self._set_err(self.password)
-            messagebox.showerror("Помилка", err or "Пароль містить недопустимі символи.", parent=self)
+            messagebox.showerror("Помилка", errp or "Пароль містить недопустимі символи.", parent=self)
             self.password.focus_set()
             return
         self._set_ok(self.password)
 
         url_val = self.url.get()
-        if (err := validate_url_value(url_val)):
+        erru = validate_url_value(url_val)
+        if erru:
             self._set_err(self.url)
-            messagebox.showerror("Помилка", err, parent=self)
+            messagebox.showerror("Помилка", erru, parent=self)
             self.url.focus_set()
             return
         self._set_ok(self.url)
