@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f26f3d9d-4f72-4b35-a2fb-0db078a7d126" name="Changes" comment="поля создаются в цикле;&#10;кнопка «Показати/Сховати» работает с тем же Entry пароля (без дублирования);&#10;валидация «на лету» через validate=&quot;key&quot; + %P (корректно обрабатывает ввод и вставку);&#10;логин — только латинские буквы/цифры; пароль — только печатаемые символы без пробелов, плюс обязательные классы символов при OK; URL — формат;&#10;Cancel завершает всё приложение (в т.ч. под pytest) через os._exit(0)">
+    <list default="true" id="f26f3d9d-4f72-4b35-a2fb-0db078a7d126" name="Changes" comment="Исправлены ошибки">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiment.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,8 +165,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python tests.Python tests in Beginning_Test_With_Form" />
-        <item itemvalue="Python.conftest" />
         <item itemvalue="Python.experiment" />
+        <item itemvalue="Python.conftest" />
         <item itemvalue="Python tests.Python tests for test_example.test_username_not_empty" />
         <item itemvalue="Python tests.Python tests in First_Test_With_Form" />
       </list>
@@ -218,13 +219,22 @@
       <option name="project" value="LOCAL" />
       <updated>1755262049671</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Исправлены ошибки">
+      <option name="closed" value="true" />
+      <created>1755263010168</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1755263010168</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Добавлена начальная форма и ввод с неё параметров для тестов" />
     <MESSAGE value="Добавлена красивая фича для ошибок" />
     <MESSAGE value="поля создаются в цикле;&#10;кнопка «Показати/Сховати» работает с тем же Entry пароля (без дублирования);&#10;валидация «на лету» через validate=&quot;key&quot; + %P (корректно обрабатывает ввод и вставку);&#10;логин — только латинские буквы/цифры; пароль — только печатаемые символы без пробелов, плюс обязательные классы символов при OK; URL — формат;&#10;Cancel завершает всё приложение (в т.ч. под pytest) через os._exit(0)" />
-    <option name="LAST_COMMIT_MESSAGE" value="поля создаются в цикле;&#10;кнопка «Показати/Сховати» работает с тем же Entry пароля (без дублирования);&#10;валидация «на лету» через validate=&quot;key&quot; + %P (корректно обрабатывает ввод и вставку);&#10;логин — только латинские буквы/цифры; пароль — только печатаемые символы без пробелов, плюс обязательные классы символов при OK; URL — формат;&#10;Cancel завершает всё приложение (в т.ч. под pytest) через os._exit(0)" />
+    <MESSAGE value="Исправлены ошибки" />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправлены ошибки" />
   </component>
 </project>

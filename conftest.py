@@ -15,7 +15,9 @@ def allow_login_value(new_value: str) -> bool:
 def allow_password_value(new_value: str) -> bool:
     # только печатаемые ASCII, без пробела
     return all(32 <= ord(c) <= 126 and c != " " for c in (new_value or ""))
-
+def allow_url_value(new_value: str) -> bool:
+    # простая проверка: начинается с http/https и есть хотя бы один "."
+    return bool(re.fullmatch(r"https?://[^\s/$.?#].[^\s]*", new_value or ""))
 
 # --- проверки при нажатии OK ---
 def validate_password_rules(pw: str):
@@ -39,6 +41,12 @@ def validate_url_value(url: str):
         return "Неправильний формат URL. Приклад: https://example.com"
     except Exception:
         return "Неправильний формат URL."
+# --- Конфиг полей ---
+FIELDS_CONFIG = [
+    {"label": "Логін:", "name": "login", "default": "", "allow_func": allow_login_value},
+    {"label": "Пароль:", "name": "password", "default": "", "allow_func": allow_password_value},
+    {"label": "Адреса (URL):", "name": "url", "default": "https://en.wikipedia.org/wiki/Main_Page", "allow_func": allow_url_value},
+]
 
 
 class InputDialog(tk.Toplevel):
@@ -53,13 +61,47 @@ class InputDialog(tk.Toplevel):
         self.password_visible = False
 
         # (лейбл, имя_атрибута, дефолт, функция_допустимого_ввода)
-        fields = (
-            ("Логін:", "login", "", allow_login_value),
-            ("Пароль:", "password", "", allow_password_value),
-            ("Адреса (URL):", "url", "https://en.wikipedia.org/wiki/Main_Page", None),
-        )
+        # fields = (
+        #     ("Логін:", "login", "", allow_login_value),
+        #     ("Пароль:", "password", "", allow_password_value),
+        #     ("Адреса (URL):", "url", "https://en.wikipedia.org/wiki/Main_Page", None),
+        # )
 
-        for row, (label_text, attr_name, default, allow_func) in enumerate(fields):
+        # for row, (label_text, attr_name, default, allow_func) in enumerate(FIELDS_CONFIG):
+        #     tk.Label(self, text=label_text).grid(row=row, column=0, padx=5, pady=5, sticky="w")
+        #     self.labels[attr_name] = label_text
+        #
+        #     show_char = "*" if attr_name == "password" else ""
+        #     entry = tk.Entry(self, show=show_char)
+        #     entry.insert(0, default)
+        #     entry.config(highlightthickness=1, highlightbackground="gray", highlightcolor="gray")
+        #
+        #     # валидация на лету, учитывает вставку (используем %P = proposed value)
+        #     if allow_func is not None:
+        #         vcmd = self._vcmd_factory(entry, allow_func)
+        #         entry.config(validate="key", validatecommand=vcmd)
+        #
+        #     entry.grid(row=row, column=1, padx=5, pady=5, sticky="we")
+        #     setattr(self, attr_name, entry)
+        #     self.entries[attr_name] = entry
+        #
+        #     # чекбокс "Обов'язкове" для каждого поля
+        #     var = tk.BooleanVar(value=True if attr_name in ("login", "password", "url") else False)
+        #     chk = tk.Checkbutton(self, text="Обов'язкове", variable=var)
+        #     chk.grid(row=row, column=2, padx=5, pady=5, sticky="w")
+        #     self.required_vars[attr_name] = var
+        #
+        #     # кнопка показать/скрыть рядом только с паролем
+        #     if attr_name == "password":
+        #         btn = tk.Button(self, text="Показати", command=self.toggle_password)
+        #         btn.grid(row=row, column=3, padx=5, pady=5, sticky="w")
+        #         self.show_btn = btn  # сохраним ссылку
+        for row, field in enumerate(FIELDS_CONFIG):
+            label_text = field["label"]
+            attr_name = field["name"]
+            default = field["default"]
+            allow_func = field["allow_func"]
+
             tk.Label(self, text=label_text).grid(row=row, column=0, padx=5, pady=5, sticky="w")
             self.labels[attr_name] = label_text
 
@@ -68,7 +110,6 @@ class InputDialog(tk.Toplevel):
             entry.insert(0, default)
             entry.config(highlightthickness=1, highlightbackground="gray", highlightcolor="gray")
 
-            # валидация на лету, учитывает вставку (используем %P = proposed value)
             if allow_func is not None:
                 vcmd = self._vcmd_factory(entry, allow_func)
                 entry.config(validate="key", validatecommand=vcmd)
@@ -77,24 +118,29 @@ class InputDialog(tk.Toplevel):
             setattr(self, attr_name, entry)
             self.entries[attr_name] = entry
 
-            # чекбокс "Обов'язкове" для каждого поля
-            var = tk.BooleanVar(value=True if attr_name in ("login", "password", "url") else False)
+            var = tk.BooleanVar(value=True)
             chk = tk.Checkbutton(self, text="Обов'язкове", variable=var)
             chk.grid(row=row, column=2, padx=5, pady=5, sticky="w")
             self.required_vars[attr_name] = var
 
-            # кнопка показать/скрыть рядом только с паролем
             if attr_name == "password":
                 btn = tk.Button(self, text="Показати", command=self.toggle_password)
                 btn.grid(row=row, column=3, padx=5, pady=5, sticky="w")
-                self.show_btn = btn  # сохраним ссылку
+                self.show_btn = btn
+
 
         # кнопки управления
+        # self.submit_button = tk.Button(self, text="OK", command=self.on_ok)
+        #         # self.submit_button.grid(row=len(fields), column=0, columnspan=1, pady=10, sticky="we", padx=5)
+        #         #
+        #         # self.cancel_button = tk.Button(self, text="Cancel", command=self.on_cancel)
+        #         # self.cancel_button.grid(row=len(fields), column=1, columnspan=1, pady=10, sticky="we", padx=5)
+
         self.submit_button = tk.Button(self, text="OK", command=self.on_ok)
-        self.submit_button.grid(row=len(fields), column=0, columnspan=1, pady=10, sticky="we", padx=5)
+        self.submit_button.grid(row=len(FIELDS_CONFIG), column=0, columnspan=1, pady=10, sticky="we", padx=5)
 
         self.cancel_button = tk.Button(self, text="Cancel", command=self.on_cancel)
-        self.cancel_button.grid(row=len(fields), column=1, columnspan=1, pady=10, sticky="we", padx=5)
+        self.cancel_button.grid(row=len(FIELDS_CONFIG), column=1, columnspan=1, pady=10, sticky="we", padx=5)
 
         self.bind("<Return>", lambda e: self.on_ok())
         self.result = None
@@ -106,9 +152,13 @@ class InputDialog(tk.Toplevel):
         req_height = self.winfo_reqheight() + 20
         self.center_window(req_width, req_height)
 
-        # курсор/фокус в конец поля пароля
-        self.password.icursor(tk.END)
-        self.password.focus_set()
+        # # курсор/фокус в конец поля пароля
+        # self.password.icursor(tk.END)
+        # self.password.focus_set()
+        # фокус на первом поле (логин)
+        first_field_name = FIELDS_CONFIG[0]["name"]
+        self.entries[first_field_name].icursor(tk.END)
+        self.entries[first_field_name].focus_set()
 
     # ------ helpers ------
     def _vcmd_factory(self, entry, allow_func):
@@ -118,7 +168,8 @@ class InputDialog(tk.Toplevel):
                 self._set_ok(entry)
             else:
                 self._set_err(entry)
-            return ok
+            # return ok
+            return True  # возвращаем True, чтобы не блокировать ввод
         return (self.register(_vcmd), "%P")
 
     def _set_err(self, entry):
