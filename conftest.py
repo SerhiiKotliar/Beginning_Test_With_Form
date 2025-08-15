@@ -207,14 +207,3 @@ def get_user_input():
     dlg.grab_set()
     root.wait_window(dlg)
     return dlg.result
-
-
-
-# Виклик форми
-# user_data = get_user_input()
-# print(user_data)
-# @pytest.fixture(scope="session")
-# def user_data():
-#     """Фікстура, яка перед запуском тестів показує форму і повертає введені дані"""
-#     # return open_form()
-#     return get_user_input()

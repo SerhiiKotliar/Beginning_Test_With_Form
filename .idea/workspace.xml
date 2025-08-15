@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f26f3d9d-4f72-4b35-a2fb-0db078a7d126" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/experiment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Beginning_Test_With_Form.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Beginning_Test_With_Form.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="f26f3d9d-4f72-4b35-a2fb-0db078a7d126" name="Changes" comment="поля создаются в цикле;&#10;кнопка «Показати/Сховати» работает с тем же Entry пароля (без дублирования);&#10;валидация «на лету» через validate=&quot;key&quot; + %P (корректно обрабатывает ввод и вставку);&#10;логин — только латинские буквы/цифры; пароль — только печатаемые символы без пробелов, плюс обязательные классы символов при OK; URL — формат;&#10;Cancel завершает всё приложение (в т.ч. под pytest) через os._exit(0)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_example.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,43 +29,43 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "SerhiiKotliar"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;SerhiiKotliar&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/SerhiiKotliar/Beginning_Test_With_Form.git",
-    "accountId": "a8fbca1c-9f4d-42a0-a9bb-cdf60ab978f3"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SerhiiKotliar/Beginning_Test_With_Form.git&quot;,
+    &quot;accountId&quot;: &quot;a8fbca1c-9f4d-42a0-a9bb-cdf60ab978f3&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="31JauIuEXgLWjlWZJylgClVIC99" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python tests.Python tests for test_example.test_username_not_empty.executor": "Run",
-    "Python tests.Python tests in Beginning_Test_With_Form.executor": "Run",
-    "Python tests.Python tests in First_Test_With_Form.executor": "Run",
-    "Python.conftest (1).executor": "Run",
-    "Python.conftest.executor": "Run",
-    "Python.experiment.executor": "Run",
-    "Python.test_first.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "G:/Visual Studio 2010/Projects/Python/Beginning_Test_With_Form",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests for test_example.test_username_not_empty.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in Beginning_Test_With_Form.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in First_Test_With_Form.executor&quot;: &quot;Run&quot;,
+    &quot;Python.conftest (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.conftest.executor&quot;: &quot;Run&quot;,
+    &quot;Python.experiment.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_first.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;G:/Visual Studio 2010/Projects/Python/Beginning_Test_With_Form&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\Visual Studio 2010\Projects\Python\Beginning_Test_With_Form" />
@@ -191,6 +186,45 @@
       <option name="presentableId" value="Default" />
       <updated>1755244853475</updated>
     </task>
+    <task id="LOCAL-00001" summary="Добавлена начальная форма и ввод с неё параметров для тестов">
+      <option name="closed" value="true" />
+      <created>1755257830684</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1755257830684</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Добавлена красивая фича для ошибок">
+      <option name="closed" value="true" />
+      <created>1755259576070</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1755259576070</updated>
+    </task>
+    <task id="LOCAL-00003" summary="поля создаются в цикле;&#10;кнопка «Показати/Сховати» работает с тем же Entry пароля (без дублирования);&#10;валидация «на лету» через validate=&quot;key&quot; + %P (корректно обрабатывает ввод и вставку);&#10;логин — только латинские буквы/цифры; пароль — только печатаемые символы без пробелов, плюс обязательные классы символов при OK; URL — формат;&#10;Cancel завершает всё приложение (в т.ч. под pytest) через os._exit(0)">
+      <option name="closed" value="true" />
+      <created>1755261641032</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1755261641032</updated>
+    </task>
+    <task id="LOCAL-00004" summary="поля создаются в цикле;&#10;кнопка «Показати/Сховати» работает с тем же Entry пароля (без дублирования);&#10;валидация «на лету» через validate=&quot;key&quot; + %P (корректно обрабатывает ввод и вставку);&#10;логин — только латинские буквы/цифры; пароль — только печатаемые символы без пробелов, плюс обязательные классы символов при OK; URL — формат;&#10;Cancel завершает всё приложение (в т.ч. под pytest) через os._exit(0)">
+      <option name="closed" value="true" />
+      <created>1755262049671</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1755262049671</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Добавлена начальная форма и ввод с неё параметров для тестов" />
+    <MESSAGE value="Добавлена красивая фича для ошибок" />
+    <MESSAGE value="поля создаются в цикле;&#10;кнопка «Показати/Сховати» работает с тем же Entry пароля (без дублирования);&#10;валидация «на лету» через validate=&quot;key&quot; + %P (корректно обрабатывает ввод и вставку);&#10;логин — только латинские буквы/цифры; пароль — только печатаемые символы без пробелов, плюс обязательные классы символов при OK; URL — формат;&#10;Cancel завершает всё приложение (в т.ч. под pytest) через os._exit(0)" />
+    <option name="LAST_COMMIT_MESSAGE" value="поля создаются в цикле;&#10;кнопка «Показати/Сховати» работает с тем же Entry пароля (без дублирования);&#10;валидация «на лету» через validate=&quot;key&quot; + %P (корректно обрабатывает ввод и вставку);&#10;логин — только латинские буквы/цифры; пароль — только печатаемые символы без пробелов, плюс обязательные классы символов при OK; URL — формат;&#10;Cancel завершает всё приложение (в т.ч. под pytest) через os._exit(0)" />
   </component>
 </project>
