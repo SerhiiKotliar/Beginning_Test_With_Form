@@ -1,7 +1,5 @@
-import pytest
 import tkinter as tk
 from tkinter import messagebox
-
 
 class InputDialog(tk.Toplevel):
     def __init__(self, parent):
@@ -14,15 +12,15 @@ class InputDialog(tk.Toplevel):
         self.required_vars = {}
         self.labels = {}  # для хранения текста лейблов
 
-        fields = [
+        fields = (
             ("Логін:", "login", ""),
             ("Пароль:", "password", ""),
-            ("Адреса (URL):", "url", "https://en.wikipedia.org/wiki/Main_Page"),
+            ("Адреса (URL):", "url", "")
             # ("Кількість навчальних зразків:", "count_train", "554"),
             # ("Кількість контрольних навчальних зразків:", "count_contr", "54"),
             # ("Розмір пакету зразків:", "batch", "555"),
             # ("Кількість епох навчання:", "epoch", "87"),
-        ]
+        )
 
         for row, (label_text, attr_name, default) in enumerate(fields):
             lbl = tk.Label(self, text=label_text)
@@ -52,11 +50,6 @@ class InputDialog(tk.Toplevel):
         self.result = None
         self.columnconfigure(1, weight=1)
 
-        # Динамическое центрирование и установка высоты
-        self.update_idletasks()  # чтобы виджеты определили размеры
-        req_width = 500  # фиксируем ширину
-        req_height = self.winfo_reqheight() + 10  # требуемая высота + небольшой запас
-        self.center_window(req_width, req_height)
 
 
     def center_window(self, width, height):
@@ -79,7 +72,7 @@ class InputDialog(tk.Toplevel):
         if missing_fields:
             messagebox.showerror(
                 "Помилка",
-                "Будь ласка, заповніть обов'язкові поля зі списку:\n" + "\n".join(missing_fields),
+                "Будь ласка, заповніть обов'язкові поля:\n" + "\n".join(missing_fields),
                 parent=self  # <-- окно ошибки поверх диалога
             )
             return  # не закрываем диалог
@@ -88,7 +81,7 @@ class InputDialog(tk.Toplevel):
         self.result = {
             "login": self.login.get(),
             "password": self.password.get(),
-            "url": self.url.get()
+            "url": self.url.get(),
             # "count_train": self.count_train.get(),
             # "count_contr": self.count_contr.get(),
             # "batch": self.batch.get(),
@@ -101,22 +94,11 @@ class InputDialog(tk.Toplevel):
         self.result = None
         self.destroy()
 
-def get_user_input():
+
+# Тест
+if __name__ == "__main__":
     root = tk.Tk()
-    root.withdraw()  # Ховаємо головне вікно
-    # Створюємо діалогове вікно
+    root.withdraw()
     dialog = InputDialog(root)
-    dialog.grab_set()  # Блокує взаємодію з іншими вікнами, поки не закриють діалог
-    root.wait_window(dialog)  # Очікує закриття діалогу
-
-    return dialog.result
-
-
-# Виклик форми
-# user_data = get_user_input()
-# print(user_data)
-# @pytest.fixture(scope="session")
-# def user_data():
-#     """Фікстура, яка перед запуском тестів показує форму і повертає введені дані"""
-#     # return open_form()
-#     return get_user_input()
+    root.wait_window(dialog)
+    print(dialog.result)
