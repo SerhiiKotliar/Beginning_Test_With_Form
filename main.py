@@ -3,7 +3,7 @@ from tkinter import messagebox
 import re
 import string
 from urllib.parse import urlparse
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QDialog
 from PySide6.QtCore import Qt
 from pyside_dialog import MyDialog  # твоя PySide форма
 # import sys
@@ -11,15 +11,15 @@ import os
 
 email = ""
 url = ""
-lenmin = 4
-lenmax = 16
+# lenmin = 4
+# lenmax = 16
 lenminlog = 4
 lenmaxlog = 16
 lenminpas = 8
 lenmaxpas = 20
-local = ""
-both_reg = False
-is_probel = False
+# local = ""
+# both_reg = False
+# is_probel = False
 latin = "A-Za-z"
 cyrylic = "А-Яа-я"
 # digits = "0-9"
@@ -28,31 +28,42 @@ digits = ""
 spec = ""
 spec_escaped = ""
 # экранируем спецсимволы
-# spec_escaped = "".join(re.escape(ch) for ch in spec)
 upregcyr = "А-Я"
 lowregcyr = "а-я"
 upreglat = "A-Z"
 lowreglat = "a-z"
-letters = "A-Za-z"
-# --- параметры логина ---
-# lenmin = 4
-# lenmax = 16
-# upreglat = ""        # заглавные латинские буквы (можно оставить пустым)
-# spec_escaped = ""    # спецсимволы (можно оставить пустым)
+# letters = "A-Za-z"
 pattern = ""
+patternlog: str = ""
+patternpas: str = ""
 chars = ""
-def entries_rules(**kwargs):
+
+def entries_rules(fname, **kwargs):
+    global pattern, chars, len_min, len_max, latin, cyrylic, spec_escaped, is_probel, email, url, both_reg, patternlog, patternpas, lenminpas, lenmaxpas, lenminlog, lenmaxlog
 
     entries = kwargs["entries"]
+
+    # инициализация переменных
+    local = ""
+    latin = "A-Za-z"
+    cyrylic = "А-Яа-я"
+    digits = ""
+    spec_escaped = ""
+    is_probel = False
+    len_min = 0
+    len_max = 0
+    email = False
+    url = False
+    both_reg = False
+
     for key, value in entries.items():
         if key == 'localiz':
             if value == 'латиниця':
                 local = latin
-                # local = "A-Za-z"
-            if value == 'кирилиця':
+            elif value == 'кирилиця':
                 local = cyrylic
-                # local = "А-Яа-я"
-        if key == 'register':
+
+        elif key == 'register':
             if value == 'великий':
                 latin = upreglat
                 cyrylic = upregcyr
@@ -61,82 +72,95 @@ def entries_rules(**kwargs):
                 cyrylic = lowregcyr
             elif value == "обидва":
                 both_reg = True
-                # local = latin+cyrylic
-            # else:
-            #     local = latin+cyrylic
-        if key == "cyfry":
-            if value:
-                digits = "0-9"
-        if key == "spec":
-            if value:
-                spec = "!@#$%^&*()-_=+[]{};:,.<>/?\\|"
-                spec_escaped = "".join(re.escape(ch) for ch in spec)
-        if key == "probel":
+
+        elif key == "cyfry" and value:
+            digits = "0-9"
+
+        elif key == "spec" and value:
+            spec = "!@#$%^&*()-_=+[]{};:,.<>/?\\|"
+            spec_escaped = "".join(re.escape(ch) for ch in spec)
+
+        elif key == "probel":
             is_probel = value
-        if key == "len_min":
+
+        elif key == "len_min":
             len_min = value
-        if key == "len_max":
+
+        elif key == "len_max":
             len_max = value
-        if key == "email_in":
-            email = value
-        if key == "url_in":
-            url = value
-        parts = []
-        if local:
-            parts.append(local)
-        if spec_escaped:
-            parts.append(spec_escaped)
-        if digits:
-            parts.append(digits)
 
-        chars = "".join(parts)
-        if not chars:
-            chars = "."  # разрешаем любой символ
-        pattern = f"[{chars}]*"
+        elif key == "email_in" and value:
+            email = "A-Za-z0-9@._\-"
 
+        elif key == "url_in" and value:
+            url = "http?://[^\s/$.?#].[^\s]"
 
-# parts = []
-# if local:
-#     parts.append(local)
-# if spec_escaped:
-#     parts.append(spec_escaped)
-# if digits:
-#     parts.append(digits)
-#
-# chars = "".join(parts)
-# if not chars:
-#     chars = "."  # разрешаем любой символ
+    # собираем разрешённые символы
+    parts = []
+    if local:
+        parts.append(local)
+    if spec_escaped:
+        parts.append(spec_escaped)
+    if digits:
+        parts.append(digits)
+    if is_probel:
+        parts.append('^\s')
+
+    chars = "".join(parts) or "."  # если ничего не выбрано — разрешаем всё
+    if email:
+        # parts.append(email)
+        chars = "A-Za-z0-9@._\-"
+    if url:
+        # parts.append(url)
+        chars ="http?://[^\s/$.?#].[^\s]"
+    # финальный паттерн с учётом длины
+    # pattern = f"[{chars}]{{{len_min},{len_max}}}"
+    pattern = f"[{chars}]*"
+    # print("✅ Готовый паттерн:", pattern)
+    if fname == "login":
+        lenminlog = len_min
+        lenmaxlog = len_max
+        patternlog = pattern
+    if fname == "password":
+        lenminpas = len_min
+        lenmaxpas = len_max
+        patternpas = pattern
+    return pattern
 
 
 # --- проверки при вводе ---
 def allow_login_value(new_value: str) -> bool:
+    global pattern, chars, patternlog
     if not new_value:
         return True
     # если chars == ".", разрешаем всё
     if chars == ".":
         return True
-    pattern = f"[{chars}]*"
-    return bool(re.fullmatch(pattern, new_value))
+    # pattern = f"[{chars}]*"
+    # patternlog = pattern
+    return bool(re.fullmatch(patternlog, new_value))
 
 def allow_password_value(new_value: str) -> bool:
+    global pattern, chars, patternpas
     if not new_value:
         return True
     # если chars == ".", разрешаем всё
     if chars == ".":
         return True
-    pattern = f"[{chars}]*"
-    return bool(re.fullmatch(pattern, new_value))
+    # pattern = f"[{chars}]*"
+    # patternpas = pattern
+    return bool(re.fullmatch(patternpas, new_value))
     # return len(new_value) <= 20 and all(32 <= ord(c) <= 126 and c != " " for c in (new_value or ""))
 
 def allow_url_value(new_value: str) -> bool:
-    return bool(re.fullmatch(r"http?://[^\s/$.?#].[^\s]*", new_value or ""))
-
+    # return bool(re.fullmatch(r"http?://[^\s/$.?#].[^\s]*", new_value or ""))
+    return bool(re.fullmatch(pattern, new_value or ""))
 # --- проверки Email при вводе ---
 def allow_email_value(new_value: str) -> bool:
     if not new_value:
         return True
     # простой паттерн для "live" проверки: разрешаем буквы, цифры, @, ., -, _
-    pattern = r"[A-Za-z0-9@._\-]*"
+    # pattern = r"[A-Za-z0-9@._\-]*"
     return bool(re.fullmatch(pattern, new_value))
 
 def validate_email_rules(email: str):
@@ -150,25 +174,41 @@ def validate_email_rules(email: str):
 
 # --- проверки при OK ---
 def validate_login_rules(log: str):
-    if not log:
+    global both_reg, digits, spec_escaped
+    if not log :
         return "Логін не може бути порожнім."
     if len(log) < lenminlog or len(log) > lenmaxlog:
-        return f"Логін має бути від {lenmin} до {lenmax} символів включно"
+        return f"Логін має бути від {lenminlog} до {lenmaxlog} символів включно"
+    if both_reg:
+        if not any(c.islower() for c in log):
+            return "Логін має містити принаймні одну маленьку літеру."
+        if not any(c.isupper() for c in log):
+            return "Логін має містити принаймні одну велику літеру."
+    if digits:
+        if not any(c.isdigit() for c in log):
+            return "Логін має містити принаймні одну цифру."
+    if spec_escaped:
+        if not any(c in string.punctuation for c in log):
+            return "Логін має містити принаймні один спеціальний символ."
     return None
 
 def validate_password_rules(pw: str):
+    global both_reg, digits, spec_escaped
     if not pw:
         return "Пароль не може бути порожнім."
-    if len(pw) < 8 or len(pw) > 20:
-        return "Пароль має бути від 8 до 20 символів включно"
-    if not any(c.islower() for c in pw):
-        return "Пароль має містити принаймні одну маленьку літеру."
-    if not any(c.isupper() for c in pw):
-        return "Пароль має містити принаймні одну велику літеру."
-    if not any(c.isdigit() for c in pw):
-        return "Пароль має містити принаймні одну цифру."
-    if not any(c in string.punctuation for c in pw):
-        return "Пароль має містити принаймні один спеціальний символ."
+    if len(pw) < lenminpas or len(pw) > lenmaxpas:
+        return f"Пароль має бути від {lenminpas} до {lenmaxpas} символів включно"
+    if both_reg:
+        if not any(c.islower() for c in pw):
+            return "Пароль має містити принаймні одну маленьку літеру."
+        if not any(c.isupper() for c in pw):
+            return "Пароль має містити принаймні одну велику літеру."
+    if digits:
+        if not any(c.isdigit() for c in pw):
+            return "Пароль має містити принаймні одну цифру."
+    if spec_escaped:
+        if not any(c in string.punctuation for c in pw):
+            return "Пароль має містити принаймні один спеціальний символ."
     return None
 
 def validate_url_value(url: str):
@@ -222,7 +262,7 @@ class InputDialog(tk.Toplevel):
 
             entry = tk.Entry(self)
             entry.insert(0, default)
-            entry.config(highlightthickness=1, highlightbackground="gray", highlightcolor="gray")
+            entry.config(highlightthickness=1, highlightbackground="gray", highlightcolor="gray", state=tk.DISABLED)
 
             if allow_func:
                 vcmd = self._vcmd_factory(entry, allow_func)
@@ -232,10 +272,16 @@ class InputDialog(tk.Toplevel):
             self.entries[name] = entry
             setattr(self, name, entry)
 
-            var = tk.BooleanVar(value=False)
-            chk = tk.Checkbutton(self, text="Обов'язкове", variable=var)
+            if name != "login" and name != "password":
+                var = tk.BooleanVar(value=False)
+                self.required_vars[name] = False
+            else:
+                var = tk.BooleanVar(value=True)
+                self.required_vars[name] = True
+            chk = tk.Checkbutton(self, text="Обов'язкове", variable=var,
+        command=lambda name=name, v=var: self.on_toggle(name, v))
             chk.grid(row=row, column=2, sticky="w", padx=5, pady=5)
-            self.required_vars[name] = var
+            # self.required_vars[name] = var
 
             # кнопка для виклику toggle_rule
             btn = tk.Button(self, text="Правила",
@@ -258,6 +304,16 @@ class InputDialog(tk.Toplevel):
         first_field = FIELDS_CONFIG[0]["name"]
         self.entries[first_field].focus_set()
 
+    def on_toggle(self, name, var):
+        # state = "включен" if var.get() else "выключен"
+        # # print(f"Чекбокс '{name}' {state}")
+        # self.required_vars[name] = var
+        if var.get():
+            state = "включен"
+            self.required_vars[name] = True
+        else:
+            state = "выключен"
+            self.required_vars[name] = False
     # --- validatecommand factory ---
     def _vcmd_factory(self, entry, allow_func):
         def _vcmd(new_value):
@@ -281,73 +337,87 @@ class InputDialog(tk.Toplevel):
         self.geometry(f"{width}x{height}+{x}+{y}")
     # відкриття форми з налаштуваннями тестів
     def toggle_rule(self, field_name):
-        print(f"Натиснута кнопка для поля: {field_name}")
+        global patternl, patternpas, pattern
+        for en in self.entries.values():
+            if en['state'] == tk.NORMAL:
+                en.config(state=tk.DISABLED)
+        # print(f"Натиснута кнопка для поля: {field_name}")
         entry = self.entries[field_name]
-
+        entry.config(state=tk.NORMAL)
+        entry.focus_set()
+        global len_max, len_min, lenminlog, lenmaxlog, lenminpas, lenmaxpas
         app = QApplication.instance()
         if not app:
             app = QApplication([])
         dlg = MyDialog()
-        cur_rules = dlg.result
+        # cur_rules = dlg.result
 
         # entries_rules({field_name: cur_rules})
 
         dlg.setWindowFlag(Qt.WindowStaysOnTopHint, True)
         dlg.setModal(True)
-        dlg.exec()
-        if dlg.btnOk.clicked:
-            entries_rules(cur_rules)
+        if dlg.exec() == QDialog.Accepted:  # ← проверка, нажата ли OK
+            cur_rules = dlg.result  # ← берём результат после закрытия
+            entries_rules(field_name, entries=cur_rules)
 
-            # if dlg.chkbSpecS.isChecked():
-            #     spec = "!@#$%^&*()-_=+[]{};:,.<>/?\\|"
-            #     spec_escaped = "".join(re.escape(ch) for ch in spec)
+        # if dlg.chkbSpecS.isChecked():
+        #     spec = "!@#$%^&*()-_=+[]{};:,.<>/?\\|"
+        #     spec_escaped = "".join(re.escape(ch) for ch in spec)
 
     def on_ok(self):
-        missing = [name for name, var in self.required_vars.items()
-                   if var.get() and not getattr(self, name).get().strip()]
+        # missing = [name for name, var in self.required_vars.items()
+        #            if var.get() and not getattr(self, name).get().strip()]
+        # missing = [name for name, var in self.required_vars.items() if var.get()]
+        # missing = [name for name, var in self.required_vars.items() if not var.get() and self.entries[name].get()==""]
+        missing = [name for name, var in self.required_vars.items() if var and self.entries[name].get()==""]
         for name in missing:
-            self._set_err(self.entries[name])
+            if not self.entries[name].get():
+                self._set_err(self.entries[name])
         if missing:
             messagebox.showerror("Помилка", "Будь ласка, заповніть обов'язкові поля:\n" +
                                  "\n".join(self.labels[n] for n in missing), parent=self)
             return
 
         login_val = self.login.get()
-        errlog = validate_login_rules(login_val)
-        if not allow_login_value(login_val) or errlog:
-            self._set_err(self.login)
-            messagebox.showerror("Помилка", errlog or "Логін містить недопустимі символи.", parent=self)
-            self.login.focus_set()
-            return
-        self._set_ok(self.login)
+        if "login" in self.required_vars and login_val !="":
+            errlog = validate_login_rules(login_val)
+            if not allow_login_value(login_val) or errlog:
+                self._set_err(self.login)
+                messagebox.showerror("Помилка", errlog or "Логін містить недопустимі символи.", parent=self)
+                self.login.focus_set()
+                return
+            self._set_ok(self.login)
 
         pw = self.password.get()
-        errp = validate_password_rules(pw)
-        if not allow_password_value(pw) or errp:
-            self._set_err(self.password)
-            messagebox.showerror("Помилка", errp or "Пароль містить недопустимі символи.", parent=self)
-            self.password.focus_set()
-            return
-        self._set_ok(self.password)
+        if "password" in self.required_vars and pw != "":
+            errp = validate_password_rules(pw)
+            if not allow_password_value(pw) or errp:
+                self._set_err(self.password)
+                messagebox.showerror("Помилка", errp or "Пароль містить недопустимі символи.", parent=self)
+                self.password.focus_set()
+                return
+            self._set_ok(self.password)
 
         url_val = self.url.get()
-        erru = validate_url_value(url_val)
-        if erru:
-            self._set_err(self.url)
-            messagebox.showerror("Помилка", erru, parent=self)
-            self.url.focus_set()
-            return
-        self._set_ok(self.url)
+        if "url" in self.required_vars and url_val != "":
+            erru = validate_url_value(url_val)
+            if erru:
+                self._set_err(self.url)
+                messagebox.showerror("Помилка", erru, parent=self)
+                self.url.focus_set()
+                return
+            self._set_ok(self.url)
 
 # проверка Email
         email_val = self.email.get()
-        erre = validate_email_rules(email_val)
-        if not allow_email_value(email_val) or erre:
-            self._set_err(self.email)
-            messagebox.showerror("Помилка", erre or "Email містить недопустимі символи.", parent=self)
-            self.email.focus_set()
-            return
-        self._set_ok(self.email)
+        if "email" in self.required_vars and email_val != "":
+            erre = validate_email_rules(email_val)
+            if not allow_email_value(email_val) or erre:
+                self._set_err(self.email)
+                messagebox.showerror("Помилка", erre or "Email містить недопустимі символи.", parent=self)
+                self.email.focus_set()
+                return
+            self._set_ok(self.email)
 
         self.result = {"login": login_val, "password": pw, "url": url_val, "email": email_val}
         self.destroy()
