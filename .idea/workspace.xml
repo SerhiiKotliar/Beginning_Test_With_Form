@@ -5,9 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f26f3d9d-4f72-4b35-a2fb-0db078a7d126" name="Changes" comment="Исправлены ошибки">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pyttest.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/.idea/PythonProject.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/First_Test_With_Form/conftest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/First_Test_With_Form/test_example.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/test_first.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonProject/test_learn1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Beginning_Test_With_Form.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Beginning_Test_With_Form.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyside_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyside_dialog.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Two_Test_Project/.idea/Two_Test_Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Two_Test_Project/.idea/Two_Test_Project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Two_Test_Project/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Two_Test_Project/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Two_Test_Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Two_Test_Project/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,23 +71,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python tests.Python tests for test_example.test_username_not_empty.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in Beginning_Test_With_Form.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in First_Test_With_Form.executor&quot;: &quot;Run&quot;,
-    &quot;Python.conftest (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.conftest.executor&quot;: &quot;Run&quot;,
-    &quot;Python.experiment.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_first.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;G:/Visual Studio 2010/Projects/Python/Beginning_Test_With_Form&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python tests.Python tests for test_example.test_username_not_empty.executor": "Run",
+    "Python tests.Python tests in Beginning_Test_With_Form.executor": "Debug",
+    "Python tests.Python tests in First_Test_With_Form.executor": "Run",
+    "Python.conftest (1).executor": "Run",
+    "Python.conftest.executor": "Run",
+    "Python.experiment.executor": "Run",
+    "Python.test_first.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "G:/Visual Studio 2010/Projects/Python/Beginning_Test_With_Form",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\Visual Studio 2010\Projects\Python\Beginning_Test_With_Form" />
@@ -236,5 +260,16 @@
     <MESSAGE value="поля создаются в цикле;&#10;кнопка «Показати/Сховати» работает с тем же Entry пароля (без дублирования);&#10;валидация «на лету» через validate=&quot;key&quot; + %P (корректно обрабатывает ввод и вставку);&#10;логин — только латинские буквы/цифры; пароль — только печатаемые символы без пробелов, плюс обязательные классы символов при OK; URL — формат;&#10;Cancel завершает всё приложение (в т.ч. под pytest) через os._exit(0)" />
     <MESSAGE value="Исправлены ошибки" />
     <option name="LAST_COMMIT_MESSAGE" value="Исправлены ошибки" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>47</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

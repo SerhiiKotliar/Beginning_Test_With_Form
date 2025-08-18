@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QApplication, QDialog
 from form import Ui_Dialog
 from PySide6.QtCore import Qt
 
-
+# клас що працює з формою налаштування тестів
 class MyDialog(QDialog, Ui_Dialog):
     def __init__(self):
         super().__init__()
@@ -30,6 +30,8 @@ class MyDialog(QDialog, Ui_Dialog):
         cyfry = self.chkbCyfry.isChecked()
         spec = self.chkbSpecS.isChecked()
         probel = self.chkbProbel.isChecked()
+        email_in = self.chkbEmail.isChecked()
+        url_in = self.chkbURL.isChecked()
 
         # Спінбокси
         len_min = self.spinBoxLenMin.value()
@@ -44,7 +46,7 @@ class MyDialog(QDialog, Ui_Dialog):
         print(f"Пробіли: {probel}")
         print(f"Мін. довжина: {len_min}")
         print(f"Макс. довжина: {len_max}")
-
+        self.result = {"register": register, "localiz": localiz, "cyfry": cyfry, "spec": spec, "probel": probel, "len_min": len_min, "len_max": len_max, "email_in": email_in, "url_in": url_in}
         # Закриваємо діалог
         self.close()
 

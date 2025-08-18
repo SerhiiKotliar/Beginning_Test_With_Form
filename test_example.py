@@ -1,19 +1,19 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from conftest import get_user_input
-
-@pytest.fixture(scope="session")
-def user_data():
-    """Фікстура, яка перед запуском тестів показує форму і повертає введені дані"""
-    return get_user_input()
-
-@pytest.fixture()
-def browser():
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    yield driver
-    driver.quit()
+# from main import get_user_input
+#
+# @pytest.fixture(scope="session")
+# def user_data():
+#     """Фікстура, яка перед запуском тестів показує форму і повертає введені дані"""
+#     return get_user_input()
+#
+# @pytest.fixture()
+# def browser():
+#     driver = webdriver.Chrome()
+#     driver.maximize_window()
+#     yield driver
+#     driver.quit()
 
 
 def test_username_not_empty(user_data):
