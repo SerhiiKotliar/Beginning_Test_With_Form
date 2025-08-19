@@ -11,8 +11,8 @@ import os
 
 email = ""
 url = ""
-# lenmin = 4
-# lenmax = 16
+len_min = 4
+len_max = 16
 lenminlog = 4
 lenmaxlog = 16
 lenminpas = 8
@@ -21,7 +21,7 @@ lenmaxpas = 20
 # both_reg = False
 # is_probel = False
 latin = "A-Za-z"
-cyrylic = "А-Яа-я"
+Cyrillic = "А-Яа-я"
 # digits = "0-9"
 digits = ""
 # spec = "!@#$%^&*()-_=+[]{};:,.<>/?\\|"
@@ -32,22 +32,24 @@ upregcyr = "А-Я"
 lowregcyr = "а-я"
 upreglat = "A-Z"
 lowreglat = "a-z"
-# letters = "A-Za-z"
+both_reg = False
+is_probel = False
 pattern = ""
 patternlog: str = ""
 patternpas: str = ""
 chars = ""
 
-def entries_rules(fname, **kwargs):
-    global pattern, chars, len_min, len_max, latin, cyrylic, spec_escaped, is_probel, email, url, both_reg, patternlog, patternpas, lenminpas, lenmaxpas, lenminlog, lenmaxlog
+
+def entries_rules(fame, **kwargs):
+    global pattern, chars, len_min, len_max, latin, Cyrillic, spec_escaped, is_probel, email, url, both_reg, patternlog, patternpas, lenminpas, lenmaxpas, lenminlog, lenmaxlog, spec
 
     entries = kwargs["entries"]
 
     # инициализация переменных
     local = ""
     latin = "A-Za-z"
-    cyrylic = "А-Яа-я"
-    digits = ""
+    Cyrillic = "А-Яа-я"
+    digits_str = ""
     spec_escaped = ""
     is_probel = False
     len_min = 0
@@ -61,20 +63,20 @@ def entries_rules(fname, **kwargs):
             if value == 'латиниця':
                 local = latin
             elif value == 'кирилиця':
-                local = cyrylic
+                local = Cyrillic
 
         elif key == 'register':
             if value == 'великий':
                 latin = upreglat
-                cyrylic = upregcyr
+                Cyrillic = upregcyr
             elif value == "малий":
                 latin = lowreglat
-                cyrylic = lowregcyr
+                Cyrillic = lowregcyr
             elif value == "обидва":
                 both_reg = True
 
         elif key == "cyfry" and value:
-            digits = "0-9"
+            digits_str = "0-9"
 
         elif key == "spec" and value:
             spec = "!@#$%^&*()-_=+[]{};:,.<>/?\\|"
@@ -101,8 +103,8 @@ def entries_rules(fname, **kwargs):
         parts.append(local)
     if spec_escaped:
         parts.append(spec_escaped)
-    if digits:
-        parts.append(digits)
+    if digits_str:
+        parts.append(digits_str)
     if is_probel:
         parts.append('^\s')
 
@@ -110,27 +112,40 @@ def entries_rules(fname, **kwargs):
     if email:
         # parts.append(email)
         chars = "A-Za-z0-9@._\-"
+        # chars = "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
     if url:
         # parts.append(url)
-        chars ="http?://[^\s/$.?#].[^\s]"
+        chars = "http?://[^\s/$.?#].[^\s]"
     # финальный паттерн с учётом длины
     # pattern = f"[{chars}]{{{len_min},{len_max}}}"
     pattern = f"[{chars}]*"
     # print("✅ Готовый паттерн:", pattern)
-    if fname == "login":
+    if fame == "login":
         lenminlog = len_min
         lenmaxlog = len_max
         patternlog = pattern
-    if fname == "password":
+    if fame == "password":
         lenminpas = len_min
         lenmaxpas = len_max
         patternpas = pattern
     return pattern
 
 
+# глобальный root (невидимый, topmost)
+_root = tk.Tk()
+_root.withdraw()
+_root.attributes("-topmost", True)
+
+
+def show_error(parent, text: str):
+    """Универсальная функция для вывода ошибки поверх всех окон"""
+    messagebox.showerror("Помилка", text, parent=parent)
+
+
 # --- проверки при вводе ---
 def allow_login_value(new_value: str) -> bool:
     global pattern, chars, patternlog
+
     if not new_value:
         return True
     # если chars == ".", разрешаем всё
@@ -140,8 +155,12 @@ def allow_login_value(new_value: str) -> bool:
     # patternlog = pattern
     return bool(re.fullmatch(patternlog, new_value))
 
+
 def allow_password_value(new_value: str) -> bool:
     global pattern, chars, patternpas
+    if email:
+        show_error(_root, "Помилка, Пароль не може форматуватись як Email адреса.")
+        return False
     if not new_value:
         return True
     # если chars == ".", разрешаем всё
@@ -152,9 +171,12 @@ def allow_password_value(new_value: str) -> bool:
     return bool(re.fullmatch(patternpas, new_value))
     # return len(new_value) <= 20 and all(32 <= ord(c) <= 126 and c != " " for c in (new_value or ""))
 
+
 def allow_url_value(new_value: str) -> bool:
     # return bool(re.fullmatch(r"http?://[^\s/$.?#].[^\s]*", new_value or ""))
     return bool(re.fullmatch(pattern, new_value or ""))
+
+
 # --- проверки Email при вводе ---
 def allow_email_value(new_value: str) -> bool:
     if not new_value:
@@ -162,6 +184,7 @@ def allow_email_value(new_value: str) -> bool:
     # простой паттерн для "live" проверки: разрешаем буквы, цифры, @, ., -, _
     # pattern = r"[A-Za-z0-9@._\-]*"
     return bool(re.fullmatch(pattern, new_value))
+
 
 def validate_email_rules(email: str):
     if not email:
@@ -172,10 +195,11 @@ def validate_email_rules(email: str):
         return "Неправильний формат Email."
     return None
 
+
 # --- проверки при OK ---
 def validate_login_rules(log: str):
-    global both_reg, digits, spec_escaped
-    if not log :
+    global both_reg, digits, spec_escaped, lenminlog, lenmaxlog
+    if not log:
         return "Логін не може бути порожнім."
     if len(log) < lenminlog or len(log) > lenmaxlog:
         return f"Логін має бути від {lenminlog} до {lenmaxlog} символів включно"
@@ -191,6 +215,7 @@ def validate_login_rules(log: str):
         if not any(c in string.punctuation for c in log):
             return "Логін має містити принаймні один спеціальний символ."
     return None
+
 
 def validate_password_rules(pw: str):
     global both_reg, digits, spec_escaped
@@ -210,6 +235,7 @@ def validate_password_rules(pw: str):
         if not any(c in string.punctuation for c in pw):
             return "Пароль має містити принаймні один спеціальний символ."
     return None
+
 
 def validate_url_value(url: str):
     if not url:
@@ -233,13 +259,16 @@ def validate_url_value(url: str):
         return "Неправильний формат URL."
     return None
 
+
 # --- конфиг полей ---
 FIELDS_CONFIG = [
     {"label": "Логін:", "name": "login", "default": "", "allow_func": allow_login_value},
     {"label": "Пароль:", "name": "password", "default": "", "allow_func": allow_password_value},
-    {"label": "Адреса (URL):", "name": "url", "default": "https://en.wikipedia.org/wiki/Main_Page", "allow_func": allow_url_value},
+    {"label": "Адреса (URL):", "name": "url", "default": "https://en.wikipedia.org/wiki/Main_Page",
+     "allow_func": allow_url_value},
     {"label": "Email:", "name": "email", "default": "", "allow_func": allow_email_value},
 ]
+
 
 class InputDialog(tk.Toplevel):
     def __init__(self, parent):
@@ -272,14 +301,14 @@ class InputDialog(tk.Toplevel):
             self.entries[name] = entry
             setattr(self, name, entry)
 
-            if name != "login" and name != "password":
-                var = tk.BooleanVar(value=False)
-                self.required_vars[name] = False
-            else:
-                var = tk.BooleanVar(value=True)
-                self.required_vars[name] = True
+            # if name != "login" and name != "password":
+            var = tk.BooleanVar(master=self, value=(name in ("login", "password")))
+            self.required_vars[name] = var
+            # else:
+            #     var = tk.BooleanVar(master=self, True)
+            #     self.required_vars[name] = var
             chk = tk.Checkbutton(self, text="Обов'язкове", variable=var,
-        command=lambda name=name, v=var: self.on_toggle(name, v))
+                                 command=lambda name=name: self.on_toggle(name))
             chk.grid(row=row, column=2, sticky="w", padx=5, pady=5)
             # self.required_vars[name] = var
 
@@ -304,16 +333,15 @@ class InputDialog(tk.Toplevel):
         first_field = FIELDS_CONFIG[0]["name"]
         self.entries[first_field].focus_set()
 
-    def on_toggle(self, name, var):
-        # state = "включен" if var.get() else "выключен"
-        # # print(f"Чекбокс '{name}' {state}")
-        # self.required_vars[name] = var
-        if var.get():
-            state = "включен"
-            self.required_vars[name] = True
-        else:
-            state = "выключен"
-            self.required_vars[name] = False
+    def on_toggle(self, name):
+        val = self.required_vars[name].get()
+        # if var.get():
+        #     state = "включен"
+        #     self.required_vars[name] = var
+        # else:
+        #     state = "выключен"
+        #     self.required_vars[name] = var
+
     # --- validatecommand factory ---
     def _vcmd_factory(self, entry, allow_func):
         def _vcmd(new_value):
@@ -322,6 +350,7 @@ class InputDialog(tk.Toplevel):
             else:
                 entry.config(highlightthickness=2, highlightbackground="red", highlightcolor="red")
             return True
+
         return (self.register(_vcmd), "%P")
 
     def _set_err(self, entry):
@@ -335,6 +364,7 @@ class InputDialog(tk.Toplevel):
         x = (sw - width) // 2
         y = (sh - height) // 2
         self.geometry(f"{width}x{height}+{x}+{y}")
+
     # відкриття форми з налаштуваннями тестів
     def toggle_rule(self, field_name):
         global patternl, patternpas, pattern
@@ -369,7 +399,7 @@ class InputDialog(tk.Toplevel):
         #            if var.get() and not getattr(self, name).get().strip()]
         # missing = [name for name, var in self.required_vars.items() if var.get()]
         # missing = [name for name, var in self.required_vars.items() if not var.get() and self.entries[name].get()==""]
-        missing = [name for name, var in self.required_vars.items() if var and self.entries[name].get()==""]
+        missing = [name for name, var in self.required_vars.items() if var.get() and self.entries[name].get() == ""]
         for name in missing:
             if not self.entries[name].get():
                 self._set_err(self.entries[name])
@@ -379,8 +409,12 @@ class InputDialog(tk.Toplevel):
             return
 
         login_val = self.login.get()
-        if "login" in self.required_vars and login_val !="":
-            errlog = validate_login_rules(login_val)
+        if "login" in self.required_vars and login_val != "":
+            if email:
+                # if "email" in self.required_vars and login_val != "":
+                errlog = validate_email_rules(login_val)
+            else:
+                errlog = validate_login_rules(login_val)
             if not allow_login_value(login_val) or errlog:
                 self._set_err(self.login)
                 messagebox.showerror("Помилка", errlog or "Логін містить недопустимі символи.", parent=self)
@@ -408,7 +442,7 @@ class InputDialog(tk.Toplevel):
                 return
             self._set_ok(self.url)
 
-# проверка Email
+        # проверка Email
         email_val = self.email.get()
         if "email" in self.required_vars and email_val != "":
             erre = validate_email_rules(email_val)
@@ -421,7 +455,6 @@ class InputDialog(tk.Toplevel):
 
         self.result = {"login": login_val, "password": pw, "url": url_val, "email": email_val}
         self.destroy()
-
 
     def on_cancel(self):
         # self.result = None
@@ -439,6 +472,7 @@ class InputDialog(tk.Toplevel):
             self.destroy()
         finally:
             os._exit(0)  # немедленно завершает процесс
+
 
 # --- вызов диалога ---
 def get_user_input():
