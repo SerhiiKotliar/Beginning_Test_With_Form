@@ -37,15 +37,6 @@ class MyDialog(QDialog, Ui_Dialog):
         len_min = self.spinBoxLenMin.value()
         len_max = self.spinBoxLenMax.value()
 
-        # Вивід результатів у консоль
-        # print("🔹 Дані з форми:")
-        # print(f"Розкладка: {localiz}")
-        # print(f"Регістр: {register}")
-        # print(f"Цифри: {cyfry}")
-        # print(f"Спецсимволи: {spec}")
-        # print(f"Пробіли: {probel}")
-        # print(f"Мін. довжина: {len_min}")
-        # print(f"Макс. довжина: {len_max}")
         self.result = {"register": register, "localiz": localiz, "cyfry": cyfry, "spec": spec, "probel": probel, "len_min": len_min, "len_max": len_max, "email_in": email_in, "url_in": url_in}
         # Закриваємо діалог
         self.accept()

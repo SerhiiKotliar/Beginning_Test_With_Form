@@ -14,3 +14,9 @@ def browser():
     driver.maximize_window()
     yield driver
     driver.quit()
+
+@pytest.fixture()
+def goto_adress(browser, user_data):
+    # url = user_data["url"]
+    browser.get(user_data["url"])
+    return browser
