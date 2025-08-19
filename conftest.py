@@ -9,7 +9,7 @@ def user_data():
     return get_user_input()
 
 @pytest.fixture()
-def browser():
+def browser1():
     driver = webdriver.Chrome()
     driver.maximize_window()
     yield driver
@@ -20,3 +20,9 @@ def goto_adress(browser, user_data):
     # url = user_data["url"]
     browser.get(user_data["url"])
     return browser
+
+@pytest.fixture()
+def browser():
+    chrome_browser = webdriver.Chrome()
+    chrome_browser.implicitly_wait(10)
+    return chrome_browser
