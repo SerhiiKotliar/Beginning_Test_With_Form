@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f26f3d9d-4f72-4b35-a2fb-0db078a7d126" name="Changes" comment="Вроде всё работает">
+    <list default="true" id="f26f3d9d-4f72-4b35-a2fb-0db078a7d126" name="Changes" comment="первый релиз">
+      <change afterPath="$PROJECT_DIR$/pages/base_page.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/likeButton.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/simple_button.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyside_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyside_dialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_example.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +247,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755595257840</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="первый релиз">
+      <option name="closed" value="true" />
+      <created>1755604538795</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1755604538795</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -258,7 +265,8 @@
     <MESSAGE value="Исправлены ошибки" />
     <MESSAGE value="Исправлены формы, известны нажатые кнопки" />
     <MESSAGE value="Вроде всё работает" />
-    <option name="LAST_COMMIT_MESSAGE" value="Вроде всё работает" />
+    <MESSAGE value="первый релиз" />
+    <option name="LAST_COMMIT_MESSAGE" value="первый релиз" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
