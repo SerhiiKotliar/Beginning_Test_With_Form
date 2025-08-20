@@ -1,6 +1,7 @@
+from prompt_toolkit.key_binding.bindings.named_commands import get_by_name
 from selenium.webdriver.common.by import By
 from conftest import goto_adress
-
+# from playwright.sync_api import Page, expect
 
 # user_data = {"login": login_val, "password": pw, "url": url_val, "email": email_val}
 
@@ -32,3 +33,8 @@ def test_find_header_text(user_data, goto_adress):
     header = browser.find_element(By.ID, 'firstHeading')
     header1 = browser.find_element(By.CSS_SELECTOR, 'table[class="infobox vcard"]')
     assert header.text == 'Wikipedia'
+
+def test_wiki(page: Page):
+    page.goto("https://en.wikipedia.org/")
+    page.get_by_role('link', name='Русский').click()
+    expect(page.get_by_text('Добро пожаловать в Википедию,')).to_be_visible()
