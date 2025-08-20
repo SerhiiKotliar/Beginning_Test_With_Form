@@ -1,17 +1,22 @@
-from selenium.webdriver.common.by import By
 from Beginning_Test_With_Form.pages.simple_button import Simple_Button_Page
-
-
+import allure
+@allure.feature("simple_button")
+@allure.story("existance")
 def test_button1_exist(browser):
-    simple_page = Simple_Button_Page(browser)
-    simple_page.open()
-    assert simple_page.button_is_displayed()
+    with  allure.step("open_simple_button_step"):
+        simple_page = Simple_Button_Page(browser)
+        simple_page.open()
+    with allure.step("open_simple_button_displayed_step"):
+        assert simple_page.button_is_displayed()
 
-
+@allure.feature("simple_button")
+@allure.story("clicable")
 def test_button1_clicked(browser):
-    simple_page = Simple_Button_Page(browser)
-    simple_page.open()
-    simple_page.click_button()
-    assert "Submitted" == simple_page.result().text
+    with allure.step("click_simple_button_step"):
+        simple_page = Simple_Button_Page(browser)
+        simple_page.open()
+        simple_page.click_button()
+    with allure.step("submit_simple_button_text_step"):
+        assert "Submitted" == simple_page.result().text
 
 

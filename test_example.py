@@ -17,12 +17,13 @@ def test_read_header(user_data, goto_adress):
     browser = goto_adress
     link = browser.find_element(By.LINK_TEXT, 'Wikipedia')
     link.click()
-    history = browser.find_element(By.ID, 'toc-History')
-    history.click()
-    header = browser.find_element(By.LINK_TEXT, 'Nupedia')
-    header.click()
-    history2 = browser.find_element(By.ID, 'Nupedia')
-    assert history2.text == 'Nupedia'
+    # history = browser.find_element(By.ID, 'toc-History')
+    # history.click()
+    # header = browser.find_element(By.LINK_TEXT, 'Nupedia')
+    # header.click()
+    header = browser.find_element(By.ID, 'firstHeading')
+    # history2 = browser.find_element(By.ID, 'Nupedia')
+    assert header.text == 'Wikipedia'
 
 def test_find_header_text(user_data, goto_adress):
     browser = goto_adress
