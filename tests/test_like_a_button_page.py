@@ -1,4 +1,4 @@
-from Beginning_Test_With_Form.pages.likeButton import Like_Button_Page
+from pages.likeButton import Like_Button_Page
 import allure
 
 @allure.feature("like_a_button")

@@ -1,4 +1,4 @@
-from Beginning_Test_With_Form.pages.simple_button import Simple_Button_Page
+from pages.simple_button import Simple_Button_Page
 import allure
 @allure.feature("simple_button")
 @allure.story("existance")
