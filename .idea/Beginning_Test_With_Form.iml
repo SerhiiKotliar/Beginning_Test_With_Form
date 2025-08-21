@@ -7,5 +7,6 @@
     <orderEntry type="jdk" jdkName="Python 3.13 (Beginning_Test_With_Form)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Python" />
+    <orderEntry type="module" module-name="Playwright-start" />
   </component>
 </module>

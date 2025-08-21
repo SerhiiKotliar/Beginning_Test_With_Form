@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f26f3d9d-4f72-4b35-a2fb-0db078a7d126" name="Changes" comment="готовим объект страницы">
+    <list default="true" id="f26f3d9d-4f72-4b35-a2fb-0db078a7d126" name="Changes" comment="удалено лишнее и осталось всё для selenium">
+      <change beforePath="$PROJECT_DIR$/.idea/Beginning_Test_With_Form.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Beginning_Test_With_Form.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/likeButton.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/likeButton.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/simple_button.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/simple_button.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_button_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_button_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_like_a_button_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_like_a_button_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Playwright-start/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Playwright-start/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +31,7 @@
         <option name="title" value="All" />
       </GitPushTagMode>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../PythonProject" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Playwright-start" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -55,49 +53,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python tests.Python tests for PythonProject.First_Test_With_Form.test_example.test_url_contains_http.executor": "Run",
-    "Python tests.Python tests for PythonProject.test_learn1.test_read_header.executor": "Run",
-    "Python tests.Python tests for test_example.test_username_not_empty.executor": "Run",
-    "Python tests.Python tests in Beginning_Test_With_Form.executor": "Run",
-    "Python tests.Python tests in First_Test_With_Form.executor": "Run",
-    "Python.conftest (1).executor": "Run",
-    "Python.conftest.executor": "Run",
-    "Python.experiment.executor": "Run",
-    "Python.test_first.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "G:/Visual Studio 2010/Projects/Python/Beginning_Test_With_Form",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Python tests for PythonProject.First_Test_With_Form.test_example.test_url_contains_http.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for PythonProject.First_Test_With_Form.test_example.test_username_not_empty.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for PythonProject.test_learn1.test_read_header.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_example.test_find_header_text.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_example.test_username_not_empty.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in Beginning_Test_With_Form.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in First_Test_With_Form.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in Playwright-start.executor&quot;: &quot;Run&quot;,
+    &quot;Python.conftest (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.conftest.executor&quot;: &quot;Run&quot;,
+    &quot;Python.experiment.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_first.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;G:/Visual Studio 2010/Projects/Python/Beginning_Test_With_Form&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\Visual Studio 2010\Projects\Python\Beginning_Test_With_Form" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in Beginning_Test_With_Form">
-    <configuration name="Python tests for PythonProject.First_Test_With_Form.test_example.test_url_contains_http" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="Python" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;PythonProject.First_Test_With_Form.test_example.test_url_contains_http&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python tests.Python tests in Playwright-start">
     <configuration name="Python tests for PythonProject.First_Test_With_Form.test_example.test_username_not_empty" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="Python" />
       <option name="ENV_FILES" value="" />
@@ -158,13 +144,28 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="Python tests in Playwright-start" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Playwright-start" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Playwright-start" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/../Playwright-start&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests in Playwright-start" />
         <item itemvalue="Python tests.Python tests in Beginning_Test_With_Form" />
         <item itemvalue="Python tests.Python tests for PythonProject.test_learn1.test_read_header" />
         <item itemvalue="Python tests.Python tests for test_example.test_find_header_text" />
         <item itemvalue="Python tests.Python tests for PythonProject.First_Test_With_Form.test_example.test_username_not_empty" />
-        <item itemvalue="Python tests.Python tests for PythonProject.First_Test_With_Form.test_example.test_url_contains_http" />
       </list>
     </recent_temporary>
   </component>
@@ -263,11 +264,19 @@
       <option name="project" value="LOCAL" />
       <updated>1755612858141</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="удалено лишнее и осталось всё для selenium">
+      <option name="closed" value="true" />
+      <created>1755759284933</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1755759284933</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TerminalProjectNonSharedOptionsProvider">
-    <option name="startingDirectory" value="G:\Visual Studio 2010\Projects\Python\Beginning_Test_With_Form" />
+    <option name="startingDirectory" value="G:\Visual Studio 2010\Projects\Python\Playwright-start" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Добавлена начальная форма и ввод с неё параметров для тестов" />
@@ -278,17 +287,7 @@
     <MESSAGE value="Вроде всё работает" />
     <MESSAGE value="первый релиз" />
     <MESSAGE value="готовим объект страницы" />
-    <option name="LAST_COMMIT_MESSAGE" value="готовим объект страницы" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/conftest.py</url>
-          <line>17</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="удалено лишнее и осталось всё для selenium" />
+    <option name="LAST_COMMIT_MESSAGE" value="удалено лишнее и осталось всё для selenium" />
   </component>
 </project>

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Beginning_Test_With_Form.iml" filepath="$PROJECT_DIR$/.idea/Beginning_Test_With_Form.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Playwright-start/.idea/Playwright-start.iml" filepath="$PROJECT_DIR$/../Playwright-start/.idea/Playwright-start.iml" />
       <module fileurl="file://$PROJECT_DIR$/../.idea/Python.iml" filepath="$PROJECT_DIR$/../.idea/Python.iml" />
     </modules>
   </component>
