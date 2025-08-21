@@ -8,5 +8,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Python" />
     <orderEntry type="module" module-name="Playwright-start" />
+    <orderEntry type="module" module-name="PlaywrightStudy" />
   </component>
 </module>
