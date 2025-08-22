@@ -96,10 +96,10 @@ def entries_rules(fame, **kwargs):
             len_max = value
 
         elif key == "email_in" and value:
-            email = "A-Za-z0-9@._\-"
+            email = r"A-Za-z0-9@._\-"
 
         elif key == "url_in" and value:
-            url = "http?://[^\s/$.?#].[^\s]"
+            url = r"http?://[^\s/$.?#].[^\s]"
 
     # собираем разрешённые символы
     parts = []
@@ -110,16 +110,16 @@ def entries_rules(fame, **kwargs):
     if digits_str:
         parts.append(digits_str)
     if is_probel:
-        parts.append('^\s')
+        parts.append(r'^\s')
 
     chars = "".join(parts) or "."  # если ничего не выбрано — разрешаем всё
     if email:
         # parts.append(email)
-        chars = "A-Za-z0-9@._\-"
+        chars = r"A-Za-z0-9@._\-"
         # chars = "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
     if url:
         # parts.append(url)
-        chars = "http?://[^\s/$.?#].[^\s]"
+        chars = r"http?://[^\s/$.?#].[^\s]"
     # финальный паттерн с учётом длины
     pattern = f"[{chars}]*"
     # print("✅ Готовый паттерн:", pattern)
