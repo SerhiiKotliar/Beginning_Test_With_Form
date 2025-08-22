@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f26f3d9d-4f72-4b35-a2fb-0db078a7d126" name="Changes" comment="добавлены генераторы тестов">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Beginning_Test_With_Form.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Beginning_Test_With_Form.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_revert_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_revert__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PlaywrightStudy/lesson_1/demo.png" beforeDir="false" afterPath="$PROJECT_DIR$/../PlaywrightStudy/lesson_1/demo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PlaywrightStudy/lesson_2/wait_examle.py" beforeDir="false" afterPath="$PROJECT_DIR$/../PlaywrightStudy/lesson_2/wait_examle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PlaywrightStudy/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../PlaywrightStudy/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyttest.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pyttest.ini" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +62,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python tests.Python tests for PythonProject.First_Test_With_Form.test_example.test_url_contains_http.executor": "Run",
@@ -72,12 +76,14 @@
     "Python tests.Python tests in First_Test_With_Form.executor": "Run",
     "Python tests.Python tests in Playwright-start.executor": "Run",
     "Python tests.Python tests in PlaywrightStudy.executor": "Run",
+    "Python tests.Python tests in Selenium.executor": "Run",
     "Python tests.Python tests in proba_generate.py.executor": "Run",
     "Python.conftest (1).executor": "Run",
     "Python.conftest.executor": "Run",
     "Python.experiment.executor": "Run",
     "Python.find_elements.executor": "Run",
     "Python.first_code.executor": "Run",
+    "Python.main (1).executor": "Run",
     "Python.main.executor": "Run",
     "Python.test_first.executor": "Run",
     "Python.undetect.executor": "Run",
@@ -95,7 +101,7 @@
       <recent name="G:\Visual Studio 2010\Projects\Python\Beginning_Test_With_Form" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in Beginning_Test_With_Form">
+  <component name="RunManager" selected="Python tests.Python tests in Selenium">
     <configuration name="find_elements" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PlaywrightStudy" />
       <option name="ENV_FILES" value="" />
@@ -118,7 +124,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Beginning_Test_With_Form" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -140,19 +146,26 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for proba_generate.test_example" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="PlaywrightStudy" />
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Beginning_Test_With_Form" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../PlaywrightStudy" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;proba_generate.test_example&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
     <configuration name="Python tests in Beginning_Test_With_Form" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
@@ -166,39 +179,39 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$&quot;" />
+      <option name="_new_target" value="&quot;D:\\Projects\\Python\\Testing\\Selenium\\main.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests in PlaywrightStudy" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="PlaywrightStudy" />
-      <option name="ENV_FILES" value="" />
+    <configuration name="Python tests in Selenium" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Beginning_Test_With_Form" />
+      <option name="ENV_FILES" value="$PROJECT_DIR$/.Selen_venv/pyvenv.cfg" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../PlaywrightStudy" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/../PlaywrightStudy&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests in Selenium" />
+        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python tests.Python tests in Beginning_Test_With_Form" />
-        <item itemvalue="Python.find_elements" />
-        <item itemvalue="Python tests.Python tests for proba_generate.test_example" />
-        <item itemvalue="Python tests.Python tests in PlaywrightStudy" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.find_elements" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-b3ae9b5d7125-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.439" />
+        <option value="bundled-python-sdk-7e47963ff851-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.515" />
       </set>
     </attachedChunks>
   </component>
@@ -350,7 +363,7 @@
     <servers />
   </component>
   <component name="TerminalProjectNonSharedOptionsProvider">
-    <option name="startingDirectory" value="G:\Visual Studio 2010\Projects\Python\PlaywrightStudy" />
+    <option name="startingDirectory" value="D:\Projects\Python\Testing\Selenium" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
