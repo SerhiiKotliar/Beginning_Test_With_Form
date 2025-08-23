@@ -8,7 +8,6 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ## Форма з налаштуваннями для тестів
 ################################################################################
-
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -17,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QCheckBox, QComboBox,
-    QDialog, QFrame, QLabel, QPushButton,
-    QSizePolicy, QSpinBox, QWidget)
+    QDialog, QFrame, QLabel, QLineEdit,
+    QPushButton, QSizePolicy, QSpinBox, QWidget)
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -55,16 +54,26 @@ class Ui_Dialog(object):
         self.cmbLocaliz.addItem("")
         self.cmbLocaliz.addItem("")
         self.cmbLocaliz.setObjectName(u"cmbLocaliz")
-        self.cmbLocaliz.setGeometry(QRect(210, 20, 150, 22))
+        self.cmbLocaliz.setGeometry(QRect(190, 20, 150, 22))
         self.chkbCyfry = QCheckBox(Dialog)
         self.chkbCyfry.setObjectName(u"chkbCyfry")
-        self.chkbCyfry.setGeometry(QRect(210, 100, 41, 20))
+        self.chkbCyfry.setGeometry(QRect(165, 100, 41, 20))
+        self.chkbCyfry.setFont(font)
+        self.chkbCyfry.setLayoutDirection(Qt.RightToLeft)
+#if QT_CONFIG(shortcut)
+        self.chkbCyfry.setShortcut(u"")
+#endif // QT_CONFIG(shortcut)
+        self.chkbCyfry.setCheckable(True)
         self.chkbSpecS = QCheckBox(Dialog)
         self.chkbSpecS.setObjectName(u"chkbSpecS")
-        self.chkbSpecS.setGeometry(QRect(210, 140, 41, 20))
+        self.chkbSpecS.setGeometry(QRect(165, 140, 41, 20))
+        self.chkbSpecS.setFont(font)
+        self.chkbSpecS.setLayoutDirection(Qt.RightToLeft)
         self.chkbProbel = QCheckBox(Dialog)
         self.chkbProbel.setObjectName(u"chkbProbel")
-        self.chkbProbel.setGeometry(QRect(210, 180, 81, 20))
+        self.chkbProbel.setGeometry(QRect(125, 180, 81, 20))
+        self.chkbProbel.setFont(font)
+        self.chkbProbel.setLayoutDirection(Qt.RightToLeft)
         self.chkbProbel.setChecked(True)
         self.label_6 = QLabel(Dialog)
         self.label_6.setObjectName(u"label_6")
@@ -75,7 +84,7 @@ class Ui_Dialog(object):
         self.label_7.setFrameShape(QFrame.NoFrame)
         self.spinBoxLenMin = QSpinBox(Dialog)
         self.spinBoxLenMin.setObjectName(u"spinBoxLenMin")
-        self.spinBoxLenMin.setGeometry(QRect(210, 220, 32, 22))
+        self.spinBoxLenMin.setGeometry(QRect(188, 220, 26, 22))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(22)
         sizePolicy.setVerticalStretch(22)
@@ -85,7 +94,7 @@ class Ui_Dialog(object):
         self.spinBoxLenMin.setValue(1)
         self.spinBoxLenMax = QSpinBox(Dialog)
         self.spinBoxLenMax.setObjectName(u"spinBoxLenMax")
-        self.spinBoxLenMax.setGeometry(QRect(210, 260, 32, 22))
+        self.spinBoxLenMax.setGeometry(QRect(188, 260, 26, 22))
         self.spinBoxLenMax.setButtonSymbols(QAbstractSpinBox.NoButtons)
         self.spinBoxLenMax.setValue(20)
         self.cmbLocaliz_2 = QComboBox(Dialog)
@@ -94,21 +103,32 @@ class Ui_Dialog(object):
         self.cmbLocaliz_2.addItem("")
         self.cmbLocaliz_2.addItem("")
         self.cmbLocaliz_2.setObjectName(u"cmbLocaliz_2")
-        self.cmbLocaliz_2.setGeometry(QRect(210, 60, 91, 22))
+        self.cmbLocaliz_2.setGeometry(QRect(190, 60, 91, 22))
         self.label_8 = QLabel(Dialog)
         self.label_8.setObjectName(u"label_8")
         self.label_8.setGeometry(QRect(20, 300, 101, 16))
         self.label_8.setFrameShape(QFrame.NoFrame)
         self.chkbEmail = QCheckBox(Dialog)
         self.chkbEmail.setObjectName(u"chkbEmail")
-        self.chkbEmail.setGeometry(QRect(210, 300, 41, 20))
+        self.chkbEmail.setGeometry(QRect(190, 300, 41, 20))
         self.label_9 = QLabel(Dialog)
         self.label_9.setObjectName(u"label_9")
         self.label_9.setGeometry(QRect(20, 340, 91, 16))
         self.label_9.setFrameShape(QFrame.NoFrame)
         self.chkbURL = QCheckBox(Dialog)
         self.chkbURL.setObjectName(u"chkbURL")
-        self.chkbURL.setGeometry(QRect(210, 340, 41, 20))
+        self.chkbURL.setGeometry(QRect(190, 340, 41, 20))
+        self.tbSpec = QLineEdit(Dialog)
+        self.tbSpec.setObjectName(u"tbSpec")
+        self.tbSpec.setEnabled(False)
+        self.tbSpec.setGeometry(QRect(220, 138, 105, 22))
+        self.label_10 = QLabel(Dialog)
+        self.label_10.setObjectName(u"label_10")
+        self.label_10.setGeometry(QRect(332, 140, 41, 16))
+        font1 = QFont()
+        font1.setPointSize(10)
+        font1.setBold(True)
+        self.label_10.setFont(font1)
 
         self.retranslateUi(Dialog)
 
@@ -151,5 +171,7 @@ class Ui_Dialog(object):
         self.chkbEmail.setText("")
         self.label_9.setText(QCoreApplication.translate("Dialog", u"\u0421\u0442\u0430\u043d\u0434\u0430\u0440\u0442 URL", None))
         self.chkbURL.setText("")
+        self.tbSpec.setPlaceholderText(QCoreApplication.translate("Dialog", u"\u0432\u0432\u0435\u0434\u0438 \u043a\u043e\u043d\u043a\u0440\u0435\u0442\u043d\u0456", None))
+        self.label_10.setText(QCoreApplication.translate("Dialog", u"\u0422\u0430\u043a\u0456", None))
     # retranslateUi
 

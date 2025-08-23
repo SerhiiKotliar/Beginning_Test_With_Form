@@ -83,8 +83,11 @@ def entries_rules(fame, **kwargs):
             digits_str = "0-9"
 
         elif key == "spec" and value:
-            spec = "!@#$%^&*()-_=+[]{};:,.<>/?\\|"
-            spec_escaped = "".join(re.escape(ch) for ch in spec)
+            if isinstance(value, str):
+                spec_escaped = "".join(re.escape(ch) for ch in value)
+            else:
+                spec = "!@#$%^&*()-_=+[]{};:,.<>/?\\|"
+                spec_escaped = "".join(re.escape(ch) for ch in spec)
 
         elif key == "probel":
             is_probel = value
@@ -269,13 +272,13 @@ def validate_url_value(url: str):
         return "Неправильний формат URL."
     return None
 
-
+# https://www.qa-practice.com/
 # --- конфиг полей ---
 FIELDS_CONFIG = [
+    {"label": "Адреса (URL):", "name": "url", "default": "https://en.wikipedia.org/wiki/Main_Page",
+         "allow_func": allow_url_value},
     {"label": "Логін:", "name": "login", "default": "", "allow_func": allow_login_value},
     {"label": "Пароль:", "name": "password", "default": "", "allow_func": allow_password_value},
-    {"label": "Адреса (URL):", "name": "url", "default": "https://en.wikipedia.org/wiki/Main_Page",
-     "allow_func": allow_url_value},
     {"label": "Email:", "name": "email", "default": "", "allow_func": allow_email_value},
 ]
 
